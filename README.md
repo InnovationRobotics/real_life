@@ -1,4 +1,4 @@
-# realLife - Run everything needed to run the real car
+# real_life - Run everything needed to run the real car
 The goal of this software package is to run anything needed in order to communicate with the real vehicle.
 It is mainly a launch file.
 

@@ -1,0 +1,24 @@
+<launch>
+  <arg name="dl" default="2" />
+
+  <!-- Run the pixhawk  -->
+  <!-- roslaunch mavros apm.launch fcu_url:=/dev/ttyUSB0:57600 gcs_url:=udp://@ -->
+  <include file="$(find mavros)/launch/apm.launch">
+         <arg name="fcu_url" value="/dev/ttyUSB0:57600" />
+         <arg name="gcs_url" value="udp://@" />
+  </include>
+  <!-- Run Arduino  -->
+  <!-- rosrun rosserial_arduino serial_node.py _port:=/dev/ttyACM0 -->
+  <node name="serial_node" type="serial_node.py" pkg="rosserial_arduino" args="_port:=/dev/ttyACM0" output="screen" respawn="false" />
+
+  <include file="$(find slrctools)/launch/allrctools.launch">
+        <arg name="dl" value="2" />
+  </include>
+
+  <!-- Perception: Velodyne + our node innov_per -->
+  <include file="$(find innovper)/launch/slallper.launch" />
+
+  <node name="rcrecorder" type="rcrecorder.py" pkg="oprecorder" output="screen" respawn="true" />
+
+  <!-- node name="tf2_web_republisher" type="tf2_web_republisher" pkg="tf2_web_republisher" args="" output="screen" respawn="true"/ -->
+</launch>

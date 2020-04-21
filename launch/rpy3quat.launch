@@ -1,6 +1,5 @@
 <launch>
-  <node name="
-  <node name="serial_node" type="quat2rpyPose.py" pkg="realLife" args="" output="screen" respawn="true"/>
+  <node name="rpy2quat" type="quat2rpyPose.py" pkg="realLife" args="" output="screen" respawn="true"/>
 
   <!-- include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" / -->
 

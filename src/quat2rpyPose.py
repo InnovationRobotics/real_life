@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 
 
 
@@ -21,8 +21,11 @@ loc_RPY_pub = rospy.Publisher('/VehiclePose_RollPithchYaw', Vector3, queue_size=
 
 
 def command_calback(msg):
-    quaternion = (
-    msg.pose.pose.orientation.x, msg.pose.pose.orientation.y, msg.pose.pose.orientation.z, msg.pose.pose.orientation.w)
+   # quaternion = (
+    #msg.pose.pose.orientation.x, msg.pose.pose.orientation.y, msg.pose.pose.orientation.z, msg.pose.pose.orientation.w)
+
+    quaternion = (msg.orientation.x, msg.orientation.y, msg.orientation.z, msg.orientation.w)
+
     euler = tf.transformations.euler_from_quaternion(quaternion)
     roll = euler[0]
     pitch = euler[1]
@@ -39,7 +42,9 @@ rospy.init_node('Pose_RollPithchYaw_pub')
 def main():
     rate = rospy.Rate(100)
     while not rospy.is_shutdown():
-        msg = rospy.wait_for_message("/mavros/local_position/pose", PoseWithCovarianceStamped)
+    #    msg = rospy.wait_for_message("/mavros/local_position/pose", PoseWithCovarianceStamped)
+        msg = rospy.wait_for_message("/mavros/imu/data", Imu)
+
         command_calback(msg)
         rate.sleep()
 
