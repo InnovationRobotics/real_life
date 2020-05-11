@@ -1,0 +1,17 @@
+<launch>
+  <arg name="dl" default="2" />
+
+  <!-- Run the pixhawk  -->
+  <!-- roslaunch mavros apm.launch fcu_url:=/dev/ttyUSB0:57600 gcs_url:=udp://@ -->
+  <!-- include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" -->
+
+  <include file="$(find slrctools)/launch/allrctoolsSim.launch">
+        <arg name="dl" value="2" />
+  </include>
+
+  <!-- Perception: Velodyne + our node innov_per -->
+  <include file="$(find innovper)/launch/slallper.launch" />
+
+<!--  <node name="rcrecorder" type="rcrecorder.py" pkg="oprecorder" output="screen" respawn="true" />-->
+
+</launch>
